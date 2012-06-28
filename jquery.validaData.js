@@ -1,9 +1,10 @@
 jQuery.fn.validaData = function (o) {
   var defaults  = {range:false}
   var confs     = $.extend(defaults,o);
-  var el        = this;
 
-  el.change(function () {
+  this.change(function () {
+    var el = this;
+
     var dataHoje, dataInformada;
     DATA = el.value;
     if (DATA == '' || DATA == '__/__/____' || DATA == '__/____') {
@@ -26,14 +27,17 @@ jQuery.fn.validaData = function (o) {
       }
 
       if ((mes == 4 && dia > 30) || (mes == 6 && dia > 30) || (mes == 9 && dia > 30) || (mes == 11 && dia > 30)) {
+        el.value='';
         alert("Dia incorreto !!! O mês especificado contém no máximo 30 dias.");
         return false;
       } else {
         if (ano % 4 != 0 && mes == 2 && dia > 28) {
+          el.value='';
           alert("Data incorreta!! O mês especificado contém no máximo 28 dias.");
           return false;
         } else {
           if (ano % 4 == 0 && mes == 2 && dia > 29) {
+            el.value='';
             alert("Data incorreta!! O mês especificado contém no máximo 29 dias.");
             return false;
           }
@@ -46,6 +50,7 @@ jQuery.fn.validaData = function (o) {
         dataInformada.setMonth(mes - 1);
         dataInformada.setYear(ano);
         if (dataInformada < dataHoje) {
+          el.value='';
           alert('Data precisa ser maior ou igual que a data de hoje!');
           return false;
         }
@@ -56,11 +61,13 @@ jQuery.fn.validaData = function (o) {
         dataInformada.setMonth(mes - 1);
         dataInformada.setYear(ano);
         if (dataInformada > dataHoje) {
+          el.value='';
           alert('Data precisa ser menor ou igual que a data de hoje!');
           return false;
         }
       }
     } else {
+      el.value='';
       alert(msgErro);
     }
     return true;
